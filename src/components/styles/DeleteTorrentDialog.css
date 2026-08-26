@@ -1,0 +1,125 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+
+    background: var(--color-overlay);
+
+    z-index: 100;
+}
+
+.delete-dialog {
+    width: 100%;
+    max-width: 360px;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    background: var(--color-bg);
+
+    box-shadow:
+        0 10px 30px
+        var(--shadow-dialog);
+}
+
+.delete-dialog-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    margin-bottom: 12px;
+
+    border-radius: 10px;
+
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+}
+
+.delete-dialog h3 {
+    margin: 0;
+
+    font-size: 17px;
+}
+
+.delete-dialog p {
+    margin: 8px 0 20px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.delete-files-option {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px;
+
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+.delete-files-option:hover {
+    background: var(--color-bg-hover);
+}
+
+.delete-files-option input {
+    width: 16px;
+    height: 16px;
+
+    cursor: pointer;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
+.danger-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 7px 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: var(--color-danger);
+    color: white;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.danger-button:hover:not(:disabled) {
+    background: var(--color-danger-hover);
+}
+
+.danger-button:disabled {
+    cursor: default;
+    opacity: 0.6;
+}

@@ -1,0 +1,42 @@
+.torrent-filters {
+    font-size: 12px;
+}
+
+.torrent-filters button:hover {
+    background: var(--color-bg-hover);
+}
+
+.torrent-filters button.active {
+    background: var(--color-selection);
+    font-weight: 600;
+    color: white;
+}
+
+.torrent-filters button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 6px 8px;
+
+    border: 0;
+    background: transparent;
+
+    text-align: left;
+    cursor: pointer;
+
+    color: var(--color-text)
+}
+
+.torrent-count {
+    min-width: 20px;
+    padding: 1px 6px;
+
+    font-size: 12px;
+    text-align: center;
+}
+
+.torrent-filters button.active .torrent-count {
+    font-weight: 600;
+}

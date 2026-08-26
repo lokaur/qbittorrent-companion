@@ -1,0 +1,56 @@
+.torrent-search {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 200px;
+    border: 0;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.torrent-search input {
+    width: 100%;
+
+    padding: 4px 8px;
+    padding-right: 26px;
+
+    box-sizing: border-box;
+
+    font-size: 12px;
+    font-family: inherit;
+
+    color: var(--color-text);
+    background-color: var(--color-bg);
+
+    border: 1px solid var(--color-border-secondary);
+    border-radius: 6px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.torrent-search input:hover {
+    border-color: var(--color-text-muted);
+}
+
+.torrent-search input:focus {
+    border-color: var(--color-primary);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37, 99, 235, 0.2);
+
+    outline: none;
+}
+
+.torrent-search .input-with-side-btn .clear-btn {
+    right: 0;
+}
+
+.clear-btn-icon {
+    margin-top: 6px;
+}

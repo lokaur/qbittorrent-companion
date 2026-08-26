@@ -1,0 +1,17 @@
+.torrent-list {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.torrent-list-state {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--color-text-muted);
+    font-size: 14px;
+}

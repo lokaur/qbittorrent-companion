@@ -1,0 +1,23 @@
+html,
+body,
+#root {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+.add-torrent-page {
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    padding: 40px;
+
+    display: flex;
+    align-items: flex-start;
+}
+
+.add-torrent-page-content {
+    width: 100%;
+    max-width: 900px;
+}

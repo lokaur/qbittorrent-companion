@@ -1,0 +1,115 @@
+.add-torrent-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    padding: 20px;
+
+    border-bottom: 1px solid var(--color-border);
+
+    flex-shrink: 0;
+}
+
+.add-torrent-header h2 {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.add-torrent-header span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    color: var(--color-text-secondary);
+}
+
+.form-field textarea {
+    box-sizing: border-box;
+
+    padding: 8px 10px;
+
+    border: 1px solid var(--color-border-secondary);
+    border-radius: 6px;
+
+    background: var(--color-bg);
+    color: var(--color-text);
+
+    font-size: 12px;
+
+    min-height: 80px;
+}
+
+.form-field textarea:focus {
+    outline: none;
+
+    border-color: var(--color-primary);
+}
+
+.add-torrent-tabs {
+    display: flex;
+
+    gap: 4px;
+
+    padding: 4px;
+
+    border-radius: 8px;
+
+    background: var(--color-bg-secondary);
+}
+
+.add-torrent-tab {
+    flex: 1;
+
+    padding: 8px 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: var(--color-text-secondary);
+
+    cursor: pointer;
+}
+
+.add-torrent-tab.active {
+    background: var(--color-bg);
+    color: var(--color-text);
+
+    box-shadow: 0 1px 2px var(--shadow-tab);
+}
+
+.torrent-file-picker input {
+    display: none;
+}
+
+.torrent-file-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 100px;
+
+    padding: 20px;
+
+    border: 2px dashed var(--color-border-secondary);
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    color: var(--color-text-secondary);
+
+    transition:
+        border-color 0.15s,
+        background 0.15s;
+}
+
+.torrent-file-picker:hover {
+    border-color: var(--color-primary);
+
+    background: var(--color-bg-hover);
+}

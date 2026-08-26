@@ -1,0 +1,15 @@
+.selected-count {
+    margin-top: auto;
+    padding: 4px 12px;
+}
+
+.selected-count div {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    width: 100%
+}
+
+.selected-count button {
+    margin-left: auto;
+}

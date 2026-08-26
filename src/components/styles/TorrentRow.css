@@ -1,0 +1,95 @@
+.torrent-row {
+    display: flex;
+    align-items: center;
+
+    font-size: 12px;
+    gap: 8px;
+    padding: 2px 6px;
+
+    min-width: 0;
+
+    border-bottom: 1px solid var(--color-border);
+
+    cursor: pointer;
+}
+
+.torrent-row:hover {
+    background: #eb8e47;
+    border-color: #eb8e47;
+    color: white;
+}
+
+.torrent-row.selected {
+    background: var(--color-selection);
+    border-color: var(--color-selection);
+    color: white;
+}
+
+.torrent-name {
+    flex: 1;
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.torrent-progress {
+    position: relative;
+
+    width: 100px;
+    height: 24px;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--color-border-secondary);
+    background: var(--color-progress-bg);
+
+    overflow: hidden;
+}
+
+.torrent-progress-fill {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    background: var(--color-progress-fill);
+
+    transition: width 0.2s ease;
+}
+
+.torrent-progress-text {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+}
+
+.torrent-progress-text-black {
+    color: var(--color-text);
+}
+
+.torrent-progress-text-white {
+    color: white;
+}
+
+.torrent-speed {
+    display: inline-flex;
+    gap: 3px;
+    align-items: center;
+
+    width: 75px;
+    flex-shrink: 0;
+
+    font-size: 11px;
+
+    text-align: right;
+    white-space: nowrap;
+}
