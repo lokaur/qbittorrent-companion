@@ -23,10 +23,19 @@
     },
     "background": {
         "scripts": ["background.js"],
-        "service_worker": "background.js",
         "type": "module"
     },
     "content_security_policy": {
         "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "qbittorrent-companion@lokaurdev",
+            "data_collection_permissions": {
+                "required": [
+                    "none"
+                ]
+            }
+        }
     }
 }
