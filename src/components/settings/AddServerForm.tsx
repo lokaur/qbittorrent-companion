@@ -4,6 +4,7 @@ import { QBittorrentClient } from "../../api/QBittorrentClient"
 import { clearPendingServer, setPendingServer } from "../../storage/serverStore"
 import { isExtension } from "../../helpers/extensionHelper"
 import { AiOutlineClose, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
+import { browserApi, isFirefox } from "../../api/browserApi"
 
 interface AddServerFormProps {
     onCancel: () => void
@@ -43,17 +44,21 @@ export function AddServerForm({
                 password
             }
 
-            if (isExtension()) {
-                await setPendingServer(server)
-
-                const granted = await chrome.permissions.request({
+            if (isExtension) {
+                let granted = false
+                if (!isFirefox) {
+                    await setPendingServer(server)
+                }
+                granted = await browserApi.permissions.request({
                     origins: [`${new URL(serverUrl).origin}/*`]
                 })
+                if (isFirefox) {
+                    await setPendingServer(server)
+                }
 
                 if (!granted) {
                     await clearPendingServer()
-                    setError(`Access denied to server ${serverUrl}`)
-                    return
+                    throw new Error(`Access denied to server ${serverUrl}`)
                 }
             }
 

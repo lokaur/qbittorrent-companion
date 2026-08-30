@@ -21,6 +21,7 @@ import type { QBittorrentServer } from "../models/QBittorrentServer"
 import { FcAddDatabase } from "react-icons/fc"
 import { useTheme } from "../hooks/useTheme"
 import type { Theme } from "../models/Theme"
+import { browserApi, isFirefox } from "../api/browserApi"
 
 function Popup() {
     const {
@@ -74,7 +75,7 @@ function Popup() {
             }
 
             const granted =
-                await chrome.permissions.contains({
+                await browserApi.permissions.contains({
                     origins: [`${new URL(server.url).origin}/*`]
                 })
 
@@ -98,7 +99,7 @@ function Popup() {
             }
         }
 
-        if (isExtension()) {
+        if (isExtension) {
             restore()
         }
     }, [createServer])
@@ -176,6 +177,21 @@ function Popup() {
         })
     }
 
+    async function openAddTorrent(): Promise<void> {
+        if (isFirefox) {
+            const url = browserApi.runtime.getURL('add-torrent.html')
+
+            await browserApi.windows.create({
+                url,
+                type: 'popup',
+                width: 900,
+                height: 700
+            })
+        } else {
+            setAddTorrent('file')
+        }
+    }
+
     async function handleAddTorrent(
         source: TorrentSource,
         downloadPath?: string
@@ -219,8 +235,8 @@ function Popup() {
             return
         }
 
-        if (isExtension()) {
-            chrome.tabs.create({
+        if (isExtension) {
+            browserApi.tabs.create({
                 url: server.url
             })
         } else {
@@ -296,14 +312,19 @@ function Popup() {
                         <span>{activeServer.name}</span>
                         <FiExternalLink size={10} />
                     </button>
-                ) : ('qBittorrent')}
+                ) : (
+                    <div className="server-name-header">
+                        <span>qBittorrent</span>
+                    </div>
+                )}
                 </h1>
 
                 <div className="header-content">
                     <button
                         className="icon-button"
                         title="Add torrent"
-                        onClick={() => setAddTorrent('file')}
+                        disabled={activeServer == null}
+                        onClick={openAddTorrent}
                     >
                         <FiPlusCircle size={16} />
                     </button>
@@ -384,6 +405,7 @@ function Popup() {
                     <SpeedIndicator
                         torrents={torrents}
                         alternativeSpeedEnabled={alternativeSpeedEnabled}
+                        disabled={activeServer == null}
                         onClick={handleToggleSpeed}
                     />
                 </div>
@@ -400,6 +422,22 @@ function Popup() {
 
                 {!activeServer && (
                     <div className="initial-state">
+                        <div
+                            className="warning"
+                            role="alert"
+                        >
+                            <span className="warning-icon">
+                                !
+                            </span>
+
+                            <span className="warning-message">
+                                Disable CSRF protection in the qBittorrent WebUI:
+                                <br/><br/>
+                                Settings → Web UI → Security
+                                <br/><br/>
+                                Disable «Enable Cross-Site Request Forgery (CSRF)»
+                            </span>
+                        </div>
                         <button
                             className="secondary-button"
                             onClick={() => setShowSettings('add-server')}>

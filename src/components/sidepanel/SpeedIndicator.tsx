@@ -7,12 +7,14 @@ import { RiSlowDownLine, RiSpeedUpLine } from "react-icons/ri";
 interface SpeedIndicatorProps {
     torrents: TorrentInfo[]
     alternativeSpeedEnabled: boolean,
+    disabled: boolean,
     onClick: () => void
 }
 
 export function SpeedIndicator({
     torrents,
     alternativeSpeedEnabled,
+    disabled,
     onClick
 }: SpeedIndicatorProps) {
     const totalUp = torrents.reduce((acc, torrent) => acc + torrent.upspeed, 0)
@@ -26,6 +28,7 @@ export function SpeedIndicator({
                     type="button"
                     className="icon-button"
                     title="Toggle alternative speed mode"
+                    disabled={disabled}
                     onClick={onClick}
                 >
                     {alternativeSpeedEnabled

@@ -12,7 +12,7 @@ const CUSTOM_LOCATION = '__custom__'
 
 interface AddTorrentProps {
     openMode: AddTorrentMode
-    openMagnet?: string
+    openMagnet?: string | null
     locations: FavoriteLocation[]
     servers: QBittorrentServer[]
     activeServer: QBittorrentServer | null

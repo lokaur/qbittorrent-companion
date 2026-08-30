@@ -1,4 +1,4 @@
-import { isExtension, setValue } from "../helpers/extensionHelper";
+import { browserApi } from "../api/browserApi";
 import type { FavoriteLocation } from "../models/FavoriteLocation";
 
 const FAVORITE_LOCATIONS_KEY = 'favoriteLocations'
@@ -8,16 +8,9 @@ interface LocationStorage {
 }
 
 export async function getLocations(): Promise<FavoriteLocation[]> {
-    if (isExtension()) {
-        const result =
-        await chrome.storage.local.get(FAVORITE_LOCATIONS_KEY) as LocationStorage
-        return result?.favoriteLocations ?? []
-    }
-
-    const value = localStorage.getItem(FAVORITE_LOCATIONS_KEY)
-    return value
-        ? JSON.parse(value)
-        : []
+    const result =
+        await browserApi.storage.local.get(FAVORITE_LOCATIONS_KEY) as LocationStorage
+    return result?.favoriteLocations ?? []
 }
 
 export async function saveLocation(location: FavoriteLocation): Promise<void> {
@@ -29,7 +22,9 @@ export async function saveLocation(location: FavoriteLocation): Promise<void> {
 }
 
 export async function saveLocations(locations: FavoriteLocation[]): Promise<void> {
-    await setValue(FAVORITE_LOCATIONS_KEY, locations)
+    await browserApi.storage.local.set({
+        [FAVORITE_LOCATIONS_KEY]: locations
+    })
 }
 
 export async function removeLocation(locationId: string): Promise<void> {

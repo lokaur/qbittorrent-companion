@@ -6,10 +6,16 @@ import { QBittorrentClient } from "../../api/QBittorrentClient";
 import { useFavoriteLocations } from "../../hooks/useFavoriteLocations";
 import { useServers } from "../../hooks/useServers";
 import { useTheme } from "../../hooks/useTheme";
+import type { AddTorrentMode } from "../../models/AddTorrentMode";
+import { AddServerForm } from "../settings/AddServerForm";
 
-function getInitialSource(): TorrentSource {
+function getInitialSource(): TorrentSource | null {
     const params = new URLSearchParams(window.location.search)
     const magnet = params.get('magnet')
+
+    if (!magnet) {
+        return null
+    }
 
     return {
         type: 'magnet',
@@ -20,6 +26,7 @@ function getInitialSource(): TorrentSource {
 export function AddTorrentPage() {
     const {
         servers,
+        createServer,
         activeServer
     } = useServers()
 
@@ -32,7 +39,7 @@ export function AddTorrentPage() {
         resolvedTheme
     } = useTheme()
 
-    const [source] = useState<TorrentSource>(getInitialSource)
+    const [source] = useState<TorrentSource | null>(getInitialSource)
 
     async function handleAdd(source: TorrentSource, downloadPath?: string) {
         if (!activeServer) {
@@ -51,13 +58,21 @@ export function AddTorrentPage() {
         }
     }
 
+    let openMode: AddTorrentMode = 'file'
+    let magnet: string | null = null
+
+    if (source && source.type === 'magnet') {
+        openMode = 'magnet'
+        magnet = source.value
+    }
+
     return (
         <main className={`app scrollable theme-${resolvedTheme} add-torrent-page`}>
             <div className="add-torrent-page-content">
                 {activeServer && (
                     <AddTorrentForm
-                        openMode={source.type == 'magnet' ? 'magnet' : 'file'}
-                        openMagnet={source.type === 'magnet' ? source.value : undefined}
+                        openMode={openMode}
+                        openMagnet={magnet}
                         locations={locations}
                         servers={servers}
                         activeServer={activeServer}
@@ -65,6 +80,14 @@ export function AddTorrentPage() {
                         onCreateLocation={addLocation}
                         onClose={handleClose}
                         onAdd={handleAdd}
+                    />
+                )}
+
+                {!activeServer && (
+                    <AddServerForm
+                        onAdd={createServer}
+                        onCancel={handleClose}
+                        onClose={handleClose}
                     />
                 )}
             </div>

@@ -1,19 +1,21 @@
+import { browserApi } from "../api/browserApi"
+
 const ADD_MAGNET = 'add-magnet'
 
-chrome.runtime.onInstalled.addListener(() => {
-    chrome.contextMenus.create({
+browserApi.runtime.onInstalled.addListener(() => {
+    browserApi.contextMenus.create({
         id: ADD_MAGNET,
         title: 'Add to QBittorrent',
         contexts: ['link']
     })
 })
 
-chrome.contextMenus.onClicked.addListener(
+browserApi.contextMenus.onClicked.addListener(
     async (info) => {
         if (info.menuItemId === ADD_MAGNET && info.linkUrl) {
-            const url = new URL(chrome.runtime.getURL('add-torrent.html'))
+            const url = new URL(browserApi.runtime.getURL('add-torrent.html'))
             url.searchParams.set('magnet', info.linkUrl)
-            chrome.tabs.create({
+            browserApi.tabs.create({
                 url: url.toString()
             })
         }
