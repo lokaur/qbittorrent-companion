@@ -2,8 +2,6 @@ import type { QBittorrentServer } from "../models/QBittorrentServer";
 import type { TorrentSource } from "../models/TorrentSource";
 import type { TorrentInfo } from "./types";
 
-const OK_RESULT = 'Ok.'
-
 export class QBittorrentClient {
     private readonly baseUrl: string
     private readonly server: QBittorrentServer
@@ -38,7 +36,7 @@ export class QBittorrentClient {
 
         const result = await response.text()
 
-        if (!response.ok || result !== OK_RESULT) {
+        if (!response.ok) {
             throw new Error(`qBittorrent login failed: ${result}`)
         }
 
@@ -78,7 +76,7 @@ export class QBittorrentClient {
 
         const result = await response.text()
 
-        if (!response.ok || result != OK_RESULT) {
+        if (!response.ok) {
             throw new Error(`Error adding torrent: ${result}`)
         }
     }
