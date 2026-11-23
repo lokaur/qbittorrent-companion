@@ -1,6 +1,7 @@
 import type { TorrentInfo } from "../api/types"
 import { TorrentRow } from "./TorrentRow"
 import './styles/TorrentList.css'
+import { t } from "../i18n/i18n"
 
 interface TorrentListProps {
     torrents: TorrentInfo[]
@@ -20,7 +21,7 @@ export function TorrentList({
     if (error) {
         return (
             <div className="torrent-list-state">
-                <span>Error: {error.message}</span>
+                <span>{t('error_with_message', { message: error.message })}</span>
             </div>
         )
     }
@@ -28,7 +29,7 @@ export function TorrentList({
     if (loading && torrents.length === 0) {
         return (
             <div className="torrent-list-state">
-                <span>Loading...</span>
+                <span>{t('loading')}</span>
             </div>
         )
     }
@@ -36,7 +37,7 @@ export function TorrentList({
     if (torrents.length === 0) {
         return (
             <div className="torrent-list-state">
-                <span>No torrents found</span>
+                <span>{t('no_torrents')}</span>
             </div>
         )
     }

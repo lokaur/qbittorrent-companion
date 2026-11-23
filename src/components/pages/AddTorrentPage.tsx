@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddTorrentForm } from "../AddTorrentForm";
 import './styles/AddTorrentPage.css'
 import type { TorrentSource } from "../../models/TorrentSource";
@@ -8,6 +8,8 @@ import { useServers } from "../../hooks/useServers";
 import { useTheme } from "../../hooks/useTheme";
 import type { AddTorrentMode } from "../../models/AddTorrentMode";
 import { AddServerForm } from "../settings/AddServerForm";
+import { useLanguage } from "../../hooks/useLanguage"
+import { t } from "../../i18n/i18n"
 
 function getInitialSource(): TorrentSource | null {
     const params = new URLSearchParams(window.location.search)
@@ -39,11 +41,19 @@ export function AddTorrentPage() {
         resolvedTheme
     } = useTheme()
 
+    const {
+        resolvedLanguage
+    } = useLanguage()
+
+    useEffect(() => {
+        document.title = t('add_torrent')
+    }, [resolvedLanguage])
+
     const [source] = useState<TorrentSource | null>(getInitialSource)
 
     async function handleAdd(source: TorrentSource, downloadPath?: string) {
         if (!activeServer) {
-            throw new Error('No active server selected')
+            throw new Error(t('no_active_server'))
         }
 
         const client = new QBittorrentClient(activeServer)

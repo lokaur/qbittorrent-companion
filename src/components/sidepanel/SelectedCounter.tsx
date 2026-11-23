@@ -1,5 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai"
 import './styles/SelectedCounter.css'
+import { t } from "../../i18n/i18n"
 
 interface SelectedCounterProps {
     count: number
@@ -13,11 +14,11 @@ export function SelectedCounter({
         <div className="selected-count">
             {count > 0 && (
                 <div>
-                    <span>{count} selected</span>
+                    <span>{t('selected_count', { count })}</span>
                     <button
                         type="button"
                         className="icon-button"
-                        title="Clear selected"
+                        title={t('clear_selected')}
                         onClick={onClear}
                     >
                         <AiOutlineClose size={12} />

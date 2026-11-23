@@ -4,8 +4,10 @@ import { AddServerForm } from "./AddServerForm"
 import './styles/Settings.css'
 import type { FavoriteLocation } from "../../models/FavoriteLocation"
 import { AddFavoriteLocationForm } from "./AddFavoriteLocationForm"
-import { FcAddDatabase, FcAddRow, FcFullTrash, FcOpenedFolder } from "react-icons/fc"
+import { FcAddDatabase, FcAddRow, FcExpand, FcFullTrash, FcOpenedFolder } from "react-icons/fc"
 import { AiOutlineClose } from "react-icons/ai"
+import { getSystemLanguage, t } from "../../i18n/i18n"
+import type { Language } from "../../models/Language"
 
 export type SettingsMode =
     | 'main'
@@ -17,11 +19,13 @@ interface SettingsProps {
     servers: QBittorrentServer[]
     activeServer: QBittorrentServer | null
     locations: FavoriteLocation[]
+    language: Language
     onCreateServer: (server: QBittorrentServer) => Promise<void>
     onDeleteServer: (serverId: string) => Promise<void>
     onSelectServer: (server: QBittorrentServer) => Promise<void>
     onCreateLocation: (location: FavoriteLocation) => Promise<void>
     onDeleteLocation: (locationId: string) => Promise<void>
+    onLanguageChange: (language: Language) => Promise<void>
     onClose: () => void
 }
 
@@ -30,11 +34,13 @@ export function Settings({
     servers,
     activeServer,
     locations,
+    language,
     onCreateServer,
     onDeleteServer,
     onSelectServer,
     onCreateLocation,
     onDeleteLocation,
+    onLanguageChange,
     onClose
 }: SettingsProps) {
     const [showAddServer, setShowAddServer] = useState(mode === 'add-server')
@@ -92,15 +98,15 @@ export function Settings({
         <div className="settings-view">
             <div className="settings-header">
                 <div>
-                    <h2>Settings</h2>
+                    <h2>{t('settings')}</h2>
                     <span>
-                        Manage servers and download locations
+                        {t('settings_subtitle')}
                     </span>
                 </div>
 
                 <button
                     className="icon-button"
-                    title="Close"
+                    title={t('close')}
                     onClick={onClose}
                 >
                     <AiOutlineClose size={16} />
@@ -111,9 +117,55 @@ export function Settings({
                 <section className="settings-section">
                     <div className="settings-section-header">
                         <div>
-                            <h3>Servers</h3>
+                            <h3>{t('language')}</h3>
                             <p>
-                                Manage your servers
+                                {t('language_subtitle')}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="form-field">
+                        <div className="select-wrapper">
+                            <select
+                                value={language}
+                                onChange={event =>
+                                    onLanguageChange(
+                                        event.target.value as Language
+                                    )
+                                }
+                            >
+                                <option value="system">
+                                    {t('language_system')}
+                                    {' '}
+                                    ({t(`language_${getSystemLanguage()}`)})
+                                </option>
+                                <option value="en">
+                                    {t('language_en')}
+                                </option>
+                                <option value="ru">
+                                    {t('language_ru')}
+                                </option>
+                                <option value="es">
+                                    {t('language_es')}
+                                </option>
+                                <option value="hi">
+                                    {t('language_hi')}
+                                </option>
+                            </select>
+
+                            <span className="select-arrow">
+                                <FcExpand />
+                            </span>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="settings-section">
+                    <div className="settings-section-header">
+                        <div>
+                            <h3>{t('servers')}</h3>
+                            <p>
+                                {t('servers_subtitle')}
                             </p>
                         </div>
 
@@ -121,7 +173,7 @@ export function Settings({
                             className="secondary-button"
                             onClick={() => setShowAddServer(true)}>
                             <FcAddDatabase size={16} />
-                            <span>Add server</span>
+                            <span>{t('add_server')}</span>
                         </button>
                     </div>
 
@@ -140,9 +192,9 @@ export function Settings({
                                             <span className="server-status" />
                                             <span className="server-name">{server.name}</span>
                                             {isActive && (
-                                                <span className="active-badge">
-                                                    Active
-                                                </span>
+                                <span className="active-badge">
+                                    {t('active')}
+                                </span>
                                             )}
                                             <span className="server-url">{server.url}</span>
                                         </div>
@@ -150,7 +202,7 @@ export function Settings({
 
                                     <button
                                         className="delete-button"
-                                        title="Delete server"
+                                        title={t('delete_server')}
                                         onClick={() => onDeleteServer(server.id)}
                                     >
                                         <FcFullTrash size={16} />
@@ -162,7 +214,7 @@ export function Settings({
 
                     {servers.length === 0 && (
                         <div className="empty-state">
-                            No servers added
+                            {t('no_servers')}
                         </div>
                     )}
                 </section>
@@ -171,10 +223,10 @@ export function Settings({
 
                     <div className="settings-section-header">
                         <div>
-                            <h3>Favorite locations</h3>
+                            <h3>{t('favorite_locations')}</h3>
 
                             <p>
-                                Quickly select a download location
+                                {t('favorite_locations_subtitle')}
                             </p>
                         </div>
 
@@ -186,13 +238,13 @@ export function Settings({
                             disabled={servers.length === 0}
                         >
                             <FcAddRow size={16} />
-                            <span>Add location</span>
+                            <span>{t('add_location')}</span>
                         </button>
                     </div>
 
                     {filteredLocations.length === 0 ? (
                         <div className="empty-state">
-                            No favorite locations yet
+                            {t('no_locations')}
                         </div>
                     ) : (
                         <div className="settings-list">
@@ -223,7 +275,7 @@ export function Settings({
                                         onClick={() =>
                                             onDeleteLocation(location.id)
                                         }
-                                        title="Delete location"
+                                        title={t('delete_location')}
                                     >
                                         <FcFullTrash size={16} />
                                     </button>

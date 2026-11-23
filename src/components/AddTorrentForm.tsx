@@ -7,6 +7,7 @@ import { FcExpand } from "react-icons/fc"
 import './styles/AddTorrentForm.css'
 import { FiUpload } from "react-icons/fi"
 import type { QBittorrentServer } from "../models/QBittorrentServer"
+import { t } from "../i18n/i18n"
 
 const CUSTOM_LOCATION = '__custom__'
 
@@ -61,11 +62,11 @@ export function AddTorrentForm({
         }
 
         if (!activeServer) {
-            throw new Error('Server not selected')
+            throw new Error(t('server_not_selected'))
         }
 
         if (!favoriteName.trim()) {
-            throw new Error('Enter location name')
+            throw new Error(t('enter_location_name'))
         }
 
         const existingLocation = favoriteLocations.find(
@@ -88,7 +89,7 @@ export function AddTorrentForm({
         event.preventDefault()
 
         if (!activeServer) {
-            setError('Server not selected')
+            setError(t('server_not_selected'))
             return
         }
 
@@ -102,7 +103,7 @@ export function AddTorrentForm({
                 const magnet = magnetLink.trim()
 
                 if (!magnet) {
-                    throw new Error('Please enter a magnet link')
+                    throw new Error(t('enter_magnet'))
                 }
 
                 torrentSource = {
@@ -111,7 +112,7 @@ export function AddTorrentForm({
                 }
             } else {
                 if (!torrentFile) {
-                    throw new Error('Please select a torrent file')
+                    throw new Error(t('select_torrent_file'))
                 }
 
                 torrentSource = {
@@ -126,7 +127,7 @@ export function AddTorrentForm({
                 const path = customPath.trim()
 
                 if (!path) {
-                    throw new Error('Enter download path')
+                    throw new Error(t('enter_download_path'))
                 }
 
                 downloadPath = path
@@ -144,7 +145,7 @@ export function AddTorrentForm({
             setError(
                 e instanceof Error
                     ? e.message
-                    : 'Failed to add torrent')
+                    : t('failed_to_add_torrent'))
             console.error(e)
         } finally {
             setLoading(false)
@@ -162,9 +163,9 @@ export function AddTorrentForm({
             onSubmit={handleSubmit}>
             <div className="add-torrent-header">
                 <div>
-                    <h2>Add torrent</h2>
+                    <h2>{t('add_torrent')}</h2>
 
-                    <span>Add torrent file or magnet link</span>
+                    <span>{t('add_torrent_subtitle')}</span>
                 </div>
 
                 <button
@@ -179,7 +180,7 @@ export function AddTorrentForm({
             <div className="form-content">
                 {showServerSelector && servers.length > 0 && (
                     <label className="form-field">
-                        <span>Server</span>
+                        <span>{t('server')}</span>
 
                         <div className="select-wrapper">
                             <select
@@ -218,7 +219,7 @@ export function AddTorrentForm({
                             setMode('magnet')
                         }}
                     >
-                        Magnet link
+                        {t('magnet_link')}
                     </button>
 
                     <button
@@ -239,7 +240,7 @@ export function AddTorrentForm({
 
                 {mode === 'magnet' && (
                     <label className="form-field">
-                        <span>Magnet link</span>
+                        <span>{t('magnet_link')}</span>
 
                         <textarea
                             id="magnet"
@@ -248,7 +249,7 @@ export function AddTorrentForm({
                                 setMagnetLink(event.target.value)
                                 setError(null)
                             }}
-                            placeholder="Paste magnet link here..."
+                            placeholder={t('magnet_placeholder')}
                         />
                     </label>
                 )}
@@ -266,13 +267,13 @@ export function AddTorrentForm({
                         <span>
                             {torrentFile
                                 ? torrentFile.name
-                                : 'Choose torrent file'}
+                                : t('choose_torrent_file')}
                         </span>
                     </label>
                 )}
 
                 <div className="form-field">
-                    <span>Download location</span>
+                    <span>{t('download_location')}</span>
 
                     <div className="select-wrapper">
                         <select
@@ -284,7 +285,7 @@ export function AddTorrentForm({
                             }}
                         >
                             <option value="">
-                                Default qBittorrent location
+                                {t('default_location')}
                             </option>
 
                             {favoriteLocations.map(location => (
@@ -297,7 +298,7 @@ export function AddTorrentForm({
                             ))}
 
                             <option value={CUSTOM_LOCATION}>
-                                Custom path...
+                                {t('custom_path')}
                             </option>
                         </select>
 
@@ -309,12 +310,12 @@ export function AddTorrentForm({
 
                 {isCustomLocation && (
                     <div className="form-field">
-                        <span>Custom path</span>
+                        <span>{t('custom_path_label')}</span>
 
                         <input
                             value={customPath}
                             onChange={event => setCustomPath(event.target.value)}
-                            placeholder="/Public/Downloads"
+                            placeholder={t('custom_path_placeholder')}
                             autoFocus
                         />
                     </div>
@@ -323,7 +324,7 @@ export function AddTorrentForm({
                 {isCustomLocation && (
                     <div className="checkbox-field">
                         <label htmlFor="save-favorite">
-                            Save as favorite download location
+                            {t('save_as_favorite')}
                         </label>
 
                         <input
@@ -339,14 +340,14 @@ export function AddTorrentForm({
 
                 {isCustomLocation && saveAsFavorite && (
                     <div className="form-field">
-                        <span>Location name</span>
+                        <span>{t('location_name')}</span>
 
                         <input
                             value={favoriteName}
                             onChange={event =>
                                 setFavoriteName(event.target.value)
                             }
-                            placeholder="Movies"
+                            placeholder={t('location_name_placeholder')}
                         />
                     </div>
                 )}
@@ -374,7 +375,7 @@ export function AddTorrentForm({
                     onClick={onClose}
                     disabled={loading}
                 >
-                    Cancel
+                    {t('cancel')}
                 </button>
 
                 <button
@@ -385,8 +386,8 @@ export function AddTorrentForm({
                     }
                 >
                     {loading
-                        ? 'Adding torrent...'
-                        : 'Add torrent'}
+                        ? t('adding_torrent')
+                        : t('add_torrent')}
                 </button>
             </div>
         </form>

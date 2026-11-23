@@ -1,6 +1,7 @@
 import type { TorrentCounts } from "../../hooks/useTorrentFilter";
 import type { TorrentFilter } from "../../models/TorrentFilter";
 import './styles/TorrentFilters.css'
+import { t } from "../../i18n/i18n"
 
 interface TorrentFiltersProps {
     value: TorrentFilter
@@ -10,35 +11,35 @@ interface TorrentFiltersProps {
 
 const filters: {
     value: TorrentFilter
-    label: string
+    labelKey: string
 }[] = [
         {
             value: 'all',
-            label: 'All'
+            labelKey: 'filter_all'
         },
         {
             value: 'downloading',
-            label: 'Downloading'
+            labelKey: 'filter_downloading'
         },
         {
             value: 'seeding',
-            label: 'Seeding'
+            labelKey: 'filter_seeding'
         },
         {
             value: 'stopped',
-            label: 'Stopped'
+            labelKey: 'filter_stopped'
         },
         {
             value: 'active',
-            label: 'Active'
+            labelKey: 'filter_active'
         },
         {
             value: 'checking',
-            label: 'Checking'
+            labelKey: 'filter_checking'
         },
         {
             value: 'errored',
-            label: 'Errored'
+            labelKey: 'filter_errored'
         }
     ]
 
@@ -62,7 +63,7 @@ export function TorrentFilters({
                     }
                 >
                     <span>
-                        {filter.label}
+                        {t(filter.labelKey)}
                     </span>
                     <span className="torrent-count">
                         {counts[filter.value]}

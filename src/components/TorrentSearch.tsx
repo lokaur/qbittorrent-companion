@@ -1,5 +1,6 @@
 import { AiOutlineClose } from 'react-icons/ai'
 import './styles/TorrentSearch.css'
+import { t } from "../i18n/i18n"
 
 interface TorrentSearchProps {
     value: string
@@ -15,7 +16,7 @@ export function TorrentSearch({
             <div className="input-with-side-btn">
                 <input
                     type="text"
-                    placeholder="Search torrents..."
+                    placeholder={t('search_placeholder')}
                     value={value}
                     onChange={event => onChange(event.target.value)}
                 />
@@ -24,7 +25,7 @@ export function TorrentSearch({
                         className="clear-btn input-side-btn"
                         onClick={() => onChange('')}
                         type="button"
-                        aria-label="Clear input"
+                        aria-label={t('clear_input')}
                     >
                         <AiOutlineClose className="input-side-btn-icon" size={14} />
                     </button>

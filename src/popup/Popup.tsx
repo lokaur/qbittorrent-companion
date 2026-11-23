@@ -22,6 +22,8 @@ import { FcAddDatabase } from "react-icons/fc"
 import { useTheme } from "../hooks/useTheme"
 import type { Theme } from "../models/Theme"
 import { browserApi, isFirefox } from "../api/browserApi"
+import { t } from "../i18n/i18n"
+import { useLanguage } from "../hooks/useLanguage"
 
 function Popup() {
     const {
@@ -59,6 +61,11 @@ function Popup() {
         resolvedTheme,
         changeTheme
     } = useTheme()
+
+    const {
+        language,
+        changeLanguage
+    } = useLanguage()
 
     const [showSettings, setShowSettings] = useState<SettingsMode | null>(null)
     const [addTorrent, setAddTorrent] = useState<AddTorrentMode | null>(null)
@@ -124,7 +131,7 @@ function Popup() {
     }, [activeServer])
 
     if (serversLoading) {
-        return <div>Loading...</div>
+        return <div>{t('loading')}</div>
     }
 
     if (showSettings) {
@@ -135,11 +142,13 @@ function Popup() {
                     servers={servers}
                     locations={locations}
                     activeServer={activeServer}
+                    language={language}
                     onCreateServer={createServer}
                     onDeleteServer={deleteServer}
                     onSelectServer={selectServer}
                     onCreateLocation={addLocation}
                     onDeleteLocation={deleteLocation}
+                    onLanguageChange={changeLanguage}
                     onClose={() => setShowSettings(null)}
                 />
             </div>
@@ -223,7 +232,7 @@ function Popup() {
         action: (client: QBittorrentClient) => Promise<void>
     ): Promise<void> {
         if (!activeServer) {
-            throw new Error('No server selected')
+            throw new Error(t('no_server_selected'))
         }
 
         const client = new QBittorrentClient(activeServer)
@@ -322,7 +331,7 @@ function Popup() {
                 <div className="header-content">
                     <button
                         className="icon-button"
-                        title="Add torrent"
+                        title={t('add_torrent')}
                         disabled={activeServer == null}
                         onClick={openAddTorrent}
                     >
@@ -331,7 +340,7 @@ function Popup() {
 
                     <button
                         className="icon-button"
-                        title="Start"
+                        title={t('start')}
                         disabled={selectedTorrentHashes.size === 0}
                         onClick={async () =>
                             await handleTorrentState(
@@ -344,7 +353,7 @@ function Popup() {
 
                     <button
                         className="icon-button"
-                        title="Stop"
+                        title={t('stop')}
                         disabled={selectedTorrentHashes.size === 0}
                         onClick={async () =>
                             await handleTorrentState(
@@ -357,7 +366,7 @@ function Popup() {
 
                     <button
                         className="icon-button"
-                        title="Delete"
+                        title={t('delete')}
                         disabled={selectedTorrentHashes.size === 0}
                         onClick={() => setShowDeleteDialog(true)}
                     >
@@ -372,7 +381,7 @@ function Popup() {
                     <div className="right-button-container">
                         <button
                             className="icon-button"
-                            title={`Theme: ${theme}`}
+                            title={t('theme_label', { theme: t(`theme_${theme}`) })}
                             onClick={toggleTheme}
                         >
                             {getThemeIcon()}
@@ -380,7 +389,7 @@ function Popup() {
 
                         <button
                             className="icon-button"
-                            title="Settings"
+                            title={t('settings')}
                             onClick={() =>
                                 setShowSettings('main')
                             }
@@ -431,18 +440,18 @@ function Popup() {
                             </span>
 
                             <span className="warning-message">
-                                Disable CSRF protection in the qBittorrent WebUI:
+                                {t('csrf_warning')}
                                 <br/><br/>
-                                Settings → Web UI → Security
+                                {t('csrf_warning_path')}
                                 <br/><br/>
-                                Disable «Enable Cross-Site Request Forgery (CSRF)»
+                                {t('csrf_warning_option')}
                             </span>
                         </div>
                         <button
                             className="secondary-button"
                             onClick={() => setShowSettings('add-server')}>
                             <FcAddDatabase />
-                            <span>Add server</span>
+                            <span>{t('add_server')}</span>
                         </button>
                     </div>
                 )}

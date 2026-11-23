@@ -5,6 +5,7 @@ import { clearPendingServer, setPendingServer } from "../../storage/serverStore"
 import { isExtension } from "../../helpers/extensionHelper"
 import { AiOutlineClose, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { browserApi, isFirefox } from "../../api/browserApi"
+import { t } from "../../i18n/i18n"
 
 interface AddServerFormProps {
     onCancel: () => void
@@ -58,7 +59,7 @@ export function AddServerForm({
 
                 if (!granted) {
                     await clearPendingServer()
-                    throw new Error(`Access denied to server ${serverUrl}`)
+                    throw new Error(t('access_denied', { url: serverUrl }))
                 }
             }
 
@@ -70,7 +71,7 @@ export function AddServerForm({
             setError(
                 err instanceof Error
                     ? err.message
-                    : 'Failed to connect'
+                    : t('failed_to_connect')
             )
         } finally {
             setSaving(false)
@@ -87,17 +88,17 @@ export function AddServerForm({
             onSubmit={handleSubmit}>
             <div className="settings-header">
                 <div>
-                    <h2>Add server</h2>
+                    <h2>{t('add_server')}</h2>
 
                     <span>
-                        Add qBittorrent server
+                        {t('add_server_subtitle')}
                     </span>
                 </div>
 
                 <button
                     type="button"
                     className="icon-button"
-                    title="Close"
+                    title={t('close')}
                     onClick={onClose}
                 >
                     <AiOutlineClose size={16} />
@@ -106,19 +107,19 @@ export function AddServerForm({
 
             <div className="form-content">
                 <div className="form-field">
-                    <span>Name</span>
+                    <span>{t('name')}</span>
 
                     <input
                         value={name}
                         onChange={event => setName(event.target.value)}
-                        placeholder="Server name"
+                        placeholder={t('server_name_placeholder')}
                         required
                         autoFocus
                     />
                 </div>
 
                 <div className="form-field">
-                    <span>URL</span>
+                    <span>{t('url')}</span>
 
                     <input
                         value={url}
@@ -129,7 +130,7 @@ export function AddServerForm({
                 </div>
 
                 <div className="form-field">
-                    <span>Username</span>
+                    <span>{t('username')}</span>
 
                     <input
                         value={username}
@@ -139,7 +140,7 @@ export function AddServerForm({
                 </div>
 
                 <div className="form-field">
-                    <span>Password</span>
+                    <span>{t('password')}</span>
 
                     <div className="input-with-side-btn">
                         <input
@@ -153,7 +154,7 @@ export function AddServerForm({
                             className="input-side-btn"
                             onClick={togglePasswordVisibility}
                             type="button"
-                            aria-label="Show password"
+                            aria-label={t('show_password')}
                         >
                             {passwordState === 'password'
                                 ? (<AiOutlineEyeInvisible className="input-side-btn-icon" size={14} />)
@@ -185,7 +186,7 @@ export function AddServerForm({
                     onClick={onCancel}
                     disabled={saving}
                 >
-                    Cancel
+                    {t('cancel')}
                 </button>
 
                 <button
@@ -199,8 +200,8 @@ export function AddServerForm({
                     }
                 >
                     {saving
-                        ? 'Connecting...'
-                        : 'Add server'}
+                        ? t('connecting')
+                        : t('add_server')}
                 </button>
             </div>
         </form>

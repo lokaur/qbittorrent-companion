@@ -2,6 +2,7 @@ import { FcDownload, FcUpload } from "react-icons/fc";
 import type { TorrentInfo } from "../../api/types";
 import { formatSpeed } from "../../helpers/speedHelper";
 import './styles/SpeedIndicator.css'
+import { t } from "../../i18n/i18n"
 import { RiSlowDownLine, RiSpeedUpLine } from "react-icons/ri";
 
 interface SpeedIndicatorProps {
@@ -23,11 +24,11 @@ export function SpeedIndicator({
     return (
         <div className="speed-indicator">
             <span>
-                Total speed:
+                {t('total_speed')}
                 <button
                     type="button"
                     className="icon-button"
-                    title="Toggle alternative speed mode"
+                    title={t('toggle_speed')}
                     disabled={disabled}
                     onClick={onClick}
                 >

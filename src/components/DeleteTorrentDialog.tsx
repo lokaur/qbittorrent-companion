@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FiTrash, FiTrash2 } from "react-icons/fi"
 import './styles/DeleteTorrentDialog.css'
+import { t } from "../i18n/i18n"
 
 interface DeleteTorrentDialogProps {
     count: number,
@@ -27,7 +28,7 @@ export function DeleteTorrentDialog({
             console.log(e)
             setError(e instanceof Error
                 ? e.message
-                : 'Failed to delete torrent'
+                : t('failed_to_delete')
             )
         } finally {
             setLoading(false)
@@ -41,10 +42,10 @@ export function DeleteTorrentDialog({
                     <FiTrash size={20} />
                 </div>
 
-                <h3>Delete {count > 1 ? `${count} torrents` : 'torrent'}?</h3>
+                <h3>{t('delete_torrents_title', { count })}</h3>
 
                 <p>
-                    The selected torrent{count > 1 ? 's' : ''} will be removed from qBittorrent
+                    {t('delete_torrents_description', { count })}
                 </p>
 
                 <label className="delete-files-option">
@@ -55,7 +56,7 @@ export function DeleteTorrentDialog({
                         disabled={loading}
                     />
                     <span>
-                        Delete torrent files and data
+                        {t('delete_files')}
                     </span>
                 </label>
 
@@ -80,7 +81,7 @@ export function DeleteTorrentDialog({
                         onClick={onCancel}
                         disabled={loading}
                     >
-                        Cancel
+                        {t('cancel')}
                     </button>
 
                     <button
@@ -91,8 +92,8 @@ export function DeleteTorrentDialog({
                         <FiTrash2 size={15} />
 
                         {loading
-                            ? 'Deleting...'
-                            : 'Delete'}
+                            ? t('deleting')
+                            : t('delete')}
                     </button>
                 </div>
             </div>

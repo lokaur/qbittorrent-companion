@@ -3,6 +3,7 @@ import type { FavoriteLocation } from "../../models/FavoriteLocation";
 import type { QBittorrentServer } from "../../models/QBittorrentServer";
 import "./styles/AddFavoriteLocationForm.css"
 import { AiOutlineClose } from "react-icons/ai";
+import { t } from "../../i18n/i18n"
 
 interface AddFavoriteLocationProps {
     activeServer: QBittorrentServer | null
@@ -49,17 +50,17 @@ export function AddFavoriteLocationForm({
         >
             <div className="settings-header">
                 <div>
-                    <h2>Add location</h2>
+                    <h2>{t('add_location')}</h2>
 
                     <span>
-                        Add a favorite download location
+                        {t('add_location_subtitle')}
                     </span>
                 </div>
 
                 <button
                     type="button"
                     className="icon-button"
-                    title="Close"
+                    title={t('close')}
                     onClick={onClose}
                 >
                     <AiOutlineClose size={16} />
@@ -69,27 +70,27 @@ export function AddFavoriteLocationForm({
             <div className="form-content">
 
                 <label className="form-field">
-                    <span>Name</span>
+                    <span>{t('name')}</span>
 
                     <input
                         value={name}
                         onChange={event =>
                             setName(event.target.value)
                         }
-                        placeholder="Movies"
+                        placeholder={t('location_name_placeholder')}
                         autoFocus
                     />
                 </label>
 
                 <label className="form-field">
-                    <span>Path</span>
+                    <span>{t('path')}</span>
 
                     <input
                         value={path}
                         onChange={event =>
                             setPath(event.target.value)
                         }
-                        placeholder="/Public/movies"
+                        placeholder={t('location_path_placeholder')}
                     />
                 </label>
 
@@ -102,7 +103,7 @@ export function AddFavoriteLocationForm({
                     onClick={onCancel}
                     disabled={loading}
                 >
-                    Cancel
+                    {t('cancel')}
                 </button>
 
                 <button
@@ -116,8 +117,8 @@ export function AddFavoriteLocationForm({
                     }
                 >
                     {loading
-                        ? 'Adding...'
-                        : 'Add location'}
+                        ? t('adding')
+                        : t('add_location')}
                 </button>
             </div>
         </form>

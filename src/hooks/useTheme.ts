@@ -13,7 +13,7 @@ function getSystemTheme(): ResolvedTheme {
 }
 
 export function useTheme() {
-    const [theme, setThemeState] = useState<Theme>()
+    const [theme, setThemeState] = useState<Theme>('system')
     const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(getSystemTheme())
 
     useEffect(() => {
