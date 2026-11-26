@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { TorrentList } from "../components/TorrentList"
 import { useServers } from "../hooks/useServers"
 import { useTorrents } from "../hooks/useTorrents"
+import { useServerStatus } from "../hooks/useServerStatus"
 import { useTorrentFilter } from "../hooks/useTorrentFilter"
 import { TorrentFilters } from "../components/sidepanel/TorrentFilters"
 import { TorrentSearch } from "../components/TorrentSearch"
@@ -14,7 +15,7 @@ import { useFavoriteLocations } from "../hooks/useFavoriteLocations"
 import { isExtension } from "../helpers/extensionHelper"
 import { FiExternalLink, FiMoon, FiPlayCircle, FiPlusCircle, FiSettings, FiStar, FiStopCircle, FiSun, FiTrash2 } from "react-icons/fi"
 import { DeleteTorrentDialog } from "../components/DeleteTorrentDialog"
-import { SpeedIndicator } from "../components/sidepanel/SpeedIndicator"
+import { StatusBar } from "../components/StatusBar"
 import { SelectedCounter } from "../components/sidepanel/SelectedCounter"
 import type { AddTorrentMode } from "../models/AddTorrentMode"
 import type { QBittorrentServer } from "../models/QBittorrentServer"
@@ -40,6 +41,11 @@ function Popup() {
         initialLoading,
         error
     } = useTorrents(activeServer)
+
+    const {
+        status: serverStatus,
+        freeSpace
+    } = useServerStatus(activeServer)
 
     const {
         filter,
@@ -71,7 +77,6 @@ function Popup() {
     const [addTorrent, setAddTorrent] = useState<AddTorrentMode | null>(null)
     const [selectedTorrentHashes, setSelectedTorrentHashes] = useState<Set<string>>(new Set())
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-    const [alternativeSpeedEnabled, setAlternativeSpeedEnabled] = useState(false)
 
     useEffect(() => {
         async function restore() {
@@ -110,25 +115,6 @@ function Popup() {
             restore()
         }
     }, [createServer])
-
-    useEffect(() => {
-        async function loadSpeedMode() {
-            if (!activeServer) {
-                setAlternativeSpeedEnabled(false)
-                return
-            }
-
-            const client = new QBittorrentClient(activeServer)
-            try {
-                const result = await client.getSpeedLimitsMode()
-                setAlternativeSpeedEnabled(result)
-            } catch (err) {
-                console.log(err)
-            }
-        }
-
-        loadSpeedMode()
-    }, [activeServer])
 
     if (serversLoading) {
         return <div>{t('loading')}</div>
@@ -181,8 +167,6 @@ function Popup() {
     async function handleToggleSpeed(): Promise<void> {
         await handleTorrentAction(async client => {
             await client.toggleAlternativeSpeedLimits()
-            const result = await client.getSpeedLimitsMode()
-            setAlternativeSpeedEnabled(result)
         })
     }
 
@@ -411,12 +395,6 @@ function Popup() {
                         count={selectedTorrentHashes.size}
                         onClear={() => setSelectedTorrentHashes(new Set())}
                     />
-                    <SpeedIndicator
-                        torrents={torrents}
-                        alternativeSpeedEnabled={alternativeSpeedEnabled}
-                        disabled={activeServer == null}
-                        onClick={handleToggleSpeed}
-                    />
                 </div>
 
                 {activeServer && (
@@ -456,6 +434,13 @@ function Popup() {
                     </div>
                 )}
             </main>
+
+            <StatusBar
+                status={activeServer ? serverStatus : null}
+                freeSpace={activeServer ? freeSpace : null}
+                disabled={activeServer == null}
+                onToggleSpeed={handleToggleSpeed}
+            />
         </div>
     )
 }

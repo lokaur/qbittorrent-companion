@@ -99,8 +99,24 @@ export const es: Record<string, string | string[]> = {
     ],
     clear_selected: 'Deseleccionar',
 
-    total_speed: 'Velocidad total:',
     toggle_speed: 'Cambiar el modo de velocidad alternativo',
+
+    column_name: 'Nombre',
+    column_size: 'Tamaño',
+    column_progress: 'Progreso',
+    column_download: 'Descargando',
+    column_upload: 'Compartiendo',
+    resize_column: 'Arrastra para cambiar el ancho de la columna',
+    sort_by_column: 'Ordenar por {column}',
+
+    status_upload_speed: 'Velocidad de subida',
+    status_download_speed: 'Velocidad de descarga',
+    status_connection_connected: 'Conectado',
+    status_connection_firewalled: 'Bloqueado por firewall',
+    status_connection_disconnected: 'Desconectado',
+    free_space: 'Espacio libre: {size}',
+    status_free_space_unknown: 'Espacio libre: desconocido',
+    status_free_space_hint: 'Espacio libre en la ruta de descarga predeterminada',
 
     start: 'Iniciar',
     stop: 'Detener',

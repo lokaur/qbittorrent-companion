@@ -10,3 +10,12 @@ export interface TorrentInfo {
     numSeeds: number
     numLeechs: number
 }
+
+export interface ServerStatus {
+    downloadSpeed: number
+    uploadSpeed: number
+    totalDownloaded: number
+    totalUploaded: number
+    connection: 'connected' | 'firewalled' | 'disconnected'
+    alternativeSpeedEnabled: boolean
+}

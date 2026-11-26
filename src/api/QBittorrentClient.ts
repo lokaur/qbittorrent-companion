@@ -1,6 +1,6 @@
 import type { QBittorrentServer } from "../models/QBittorrentServer";
 import type { TorrentSource } from "../models/TorrentSource";
-import type { TorrentInfo } from "./types";
+import type { ServerStatus, TorrentInfo } from "./types";
 
 export class QBittorrentClient {
     private readonly baseUrl: string
@@ -132,6 +132,35 @@ export class QBittorrentClient {
         const result = await response.text()
 
         return result.trim() === '1'
+    }
+
+    async getServerStatus(): Promise<ServerStatus> {
+        const response = await this.authenticatedRequest('/transfer/info')
+        const info = await response.json()
+
+        return {
+            downloadSpeed: Number(info.dl_info_speed ?? 0),
+            uploadSpeed: Number(info.up_info_speed ?? 0),
+            totalDownloaded: Number(info.dl_info_data ?? 0),
+            totalUploaded: Number(info.up_info_data ?? 0),
+            connection:
+                info.connection_status === 'connected'
+                    ? 'connected'
+                    : info.connection_status === 'firewalled'
+                        ? 'firewalled'
+                        : 'disconnected',
+            alternativeSpeedEnabled: await this.getSpeedLimitsMode()
+        }
+    }
+
+    async getFreeDiskSpace(): Promise<number | null> {
+        const response = await this.authenticatedRequest('/sync/maindata')
+        const data = await response.json()
+        const freeSpace = data?.server_state?.free_space_on_disk
+
+        return Number.isFinite(freeSpace) && freeSpace >= 0
+            ? Number(freeSpace)
+            : null
     }
 
     async toggleAlternativeSpeedLimits(): Promise<void> {

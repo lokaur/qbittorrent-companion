@@ -99,8 +99,24 @@ export const hi: Record<string, string | string[]> = {
     ],
     clear_selected: 'चयन साफ़ करें',
 
-    total_speed: 'कुल गति:',
     toggle_speed: 'वैकल्पिक गति मोड बदलें',
+
+    column_name: 'नाम',
+    column_size: 'आकार',
+    column_progress: 'प्रगति',
+    column_download: 'डाउनलोड',
+    column_upload: 'सीडिंग',
+    resize_column: 'कॉलम की चौड़ाई बदलने के लिए खींचें',
+    sort_by_column: '{column} के अनुसार क्रमबद्ध करें',
+
+    status_upload_speed: 'अपलोड गति',
+    status_download_speed: 'डाउनलोड गति',
+    status_connection_connected: 'कनेक्ट',
+    status_connection_firewalled: 'फायरवॉल बाधित',
+    status_connection_disconnected: 'अनुपलब्ध',
+    free_space: 'खाली जगह: {size}',
+    status_free_space_unknown: 'खाली जगह: अज्ञात',
+    status_free_space_hint: 'डिफ़ॉल्ट डाउनलोड पथ पर खाली जगह',
 
     start: 'शुरू करें',
     stop: 'रोकें',

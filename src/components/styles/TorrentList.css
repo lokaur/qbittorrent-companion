@@ -1,3 +1,97 @@
+.torrent-table {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.torrent-table-header {
+    flex-shrink: 0;
+
+    display: grid;
+    grid-template-columns: var(--torrent-columns);
+    gap: 8px;
+    align-items: center;
+
+    padding: 6px 6px;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.torrent-header-cell {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+}
+
+.torrent-header-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    min-width: 0;
+    overflow: hidden;
+
+    border: none;
+    background: transparent;
+
+    font: inherit;
+    color: inherit;
+
+    cursor: pointer;
+}
+
+.torrent-header-sort span {
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.torrent-header-sort svg {
+    flex-shrink: 0;
+}
+
+.torrent-header-sort:hover {
+    color: var(--color-primary);
+}
+
+.torrent-header-cell-active {
+    color: var(--color-primary);
+}
+
+.torrent-header-cell span {
+    padding-left: 6px;
+}
+
+.torrent-resizer {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    bottom: 0;
+
+    width: 8px;
+
+    background: var(--color-border-secondary);
+
+    cursor: col-resize;
+}
+
+.torrent-resizer:hover {
+    background: var(--color-primary);
+}
+
 .torrent-list {
     flex: 1;
     min-width: 0;

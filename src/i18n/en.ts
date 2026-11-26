@@ -99,8 +99,24 @@ export const en: Record<string, string | string[]> = {
     ],
     clear_selected: 'Clear selected',
 
-    total_speed: 'Total speed:',
     toggle_speed: 'Toggle alternative speed mode',
+
+    column_name: 'Name',
+    column_size: 'Size',
+    column_progress: 'Progress',
+    column_download: 'Downloading',
+    column_upload: 'Seeding',
+    resize_column: 'Drag to resize column',
+    sort_by_column: 'Sort by {column}',
+
+    status_upload_speed: 'Upload speed',
+    status_download_speed: 'Download speed',
+    status_connection_connected: 'Connected',
+    status_connection_firewalled: 'Firewalled',
+    status_connection_disconnected: 'Disconnected',
+    free_space: 'Free space: {size}',
+    status_free_space_unknown: 'Free space: unknown',
+    status_free_space_hint: 'Free space on the default download path',
 
     start: 'Start',
     stop: 'Stop',

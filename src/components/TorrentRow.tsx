@@ -26,7 +26,7 @@ export function TorrentRow({
                 {torrent.name}
             </div>
 
-            <div>
+            <div className="torrent-size">
                 {formatBytes(torrent.size)}
             </div>
 

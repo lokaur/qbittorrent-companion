@@ -101,8 +101,24 @@ export const ru: Record<string, string | string[]> = {
     ],
     clear_selected: 'Снять выбор',
 
-    total_speed: 'Общая скорость:',
     toggle_speed: 'Переключить альтернативный режим скорости',
+
+    column_name: 'Название',
+    column_size: 'Размер',
+    column_progress: 'Прогресс',
+    column_download: 'Загрузка',
+    column_upload: 'Раздача',
+    resize_column: 'Перетащите, чтобы изменить ширину колонки',
+    sort_by_column: 'Сортировать по «{column}»',
+
+    status_upload_speed: 'Скорость отдачи',
+    status_download_speed: 'Скорость загрузки',
+    status_connection_connected: 'Подключено',
+    status_connection_firewalled: 'Заблокировано firewall',
+    status_connection_disconnected: 'Отключено',
+    free_space: 'Свободно: {size}',
+    status_free_space_unknown: 'Свободное место: неизвестно',
+    status_free_space_hint: 'Свободное место на пути загрузки по умолчанию',
 
     start: 'Запустить',
     stop: 'Остановить',
